@@ -334,20 +334,21 @@ dialog::backdrop{background:rgba(0,0,0,.5)}
   function enter(key, silent){
     KEY = key;
     return api('GET','/api/admin/check').then(function(){
-      try{ sessionStorage.setItem('ak', key); }catch(e){}
+      try{ localStorage.setItem('ak', JSON.stringify({k:key, exp:Date.now()+360*864e5})); }catch(e){}
       $('login').classList.add('hide'); $('panel').classList.remove('hide');
       live();
       return loadAll();
     }).catch(function(e){
-      KEY=''; try{ sessionStorage.removeItem('ak'); }catch(x){}
+      KEY='';
+      if(!silent){ try{ localStorage.removeItem('ak'); }catch(x){} }
       if(!silent) $('lmsg').textContent = e.message || 'تعذّر الاتصال';
     });
   }
   $('enter').onclick = function(){ var k=$('key').value.trim(); if(k) enter(k,false); };
   $('key').addEventListener('keydown', function(e){ if(e.key==='Enter') $('enter').click(); });
-  $('logout').onclick = function(){ KEY=''; try{ sessionStorage.removeItem('ak'); }catch(e){} location.reload(); };
+  $('logout').onclick = function(){ KEY=''; try{ localStorage.removeItem('ak'); }catch(e){} location.reload(); };
 
-  try{ var saved=sessionStorage.getItem('ak'); if(saved) enter(saved,true); }catch(e){}
+  try{ var sv=JSON.parse(localStorage.getItem('ak')||'null'); if(sv && sv.k && sv.exp>Date.now()) enter(sv.k,true); else localStorage.removeItem('ak'); }catch(e){}
 })();
 </script>
 </body>
