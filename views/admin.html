@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>لوحة التحكم | دليل الأسماء والأرقام</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="/import.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f6fb;--card:#fff;--text:#14213d;--muted:#6b7280;--primary:#1e4fd8;--primary-t:#fff;--line:#e3e7f0;--soft:#eaf0ff;--ok:#0f9d58;--err:#d93025;--errbg:#fdecea}
+@media (prefers-color-scheme:dark){:root{--bg:#0e1424;--card:#171f35;--text:#eef1fa;--muted:#9aa4bf;--primary:#5b8cff;--primary-t:#0b1020;--line:#26304d;--soft:#1d2a4d;--ok:#4cc38a;--err:#ff7b72;--errbg:#3a1d22}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'Tajawal',system-ui,-apple-system,'Segoe UI',Tahoma,sans-serif;line-height:1.6;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.wrap{max-width:900px;margin:0 auto;padding:16px 16px 48px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:6px 0 16px}
+h1{font-size:21px;margin:0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}
+input,select{width:100%;font:inherit;color:var(--text);background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:11px 14px;margin-top:6px;outline:none}
+input:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--soft)}
+label{display:block;font-weight:500;font-size:14px;margin-top:12px}
+.btn{border:0;background:var(--primary);color:var(--primary-t);font:inherit;font-weight:700;padding:10px 16px;border-radius:12px;cursor:pointer}
+.btn.ghost{background:var(--soft);color:var(--primary)}
+.btn.danger{background:var(--errbg);color:var(--err)}
+.btn.sm{padding:6px 12px;font-size:13px;border-radius:10px}
+.btn.block{width:100%;margin-top:16px;padding:13px}
+.btn:disabled{opacity:.6}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;text-align:center}
+.stat b{display:block;font-size:22px;color:var(--primary)}
+.stat span{font-size:12px;color:var(--muted)}
+.tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.tools input{flex:1;min-width:180px;margin:0}
+.row{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:10px}
+.av{flex:none;width:42px;height:42px;border-radius:50%;background:var(--soft);color:var(--primary);display:grid;place-items:center;font-weight:700}
+.info{flex:1;min-width:0}
+.nm{font-weight:700}
+.rl,.ph{color:var(--muted);font-size:13px}
+.ph{direction:ltr;text-align:right}
+.acts{flex:none;display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.chk{flex:none;width:20px;height:20px;margin:0;accent-color:var(--primary);cursor:pointer}
+.selbar{flex-wrap:wrap;display:flex;align-items:center;gap:10px;margin:0 4px 10px;font-size:14px;color:var(--muted)}
+.selbar label{display:flex;align-items:center;gap:6px;margin:0;font-size:14px;cursor:pointer}
+.selbar .chk{width:18px;height:18px}
+.row.off{opacity:.6;border-style:dashed}
+.badge{display:inline-block;background:var(--errbg);color:var(--err);font-size:11px;font-weight:700;padding:1px 8px;border-radius:20px;margin-inline-start:6px}
+.empty{text-align:center;color:var(--muted);padding:30px}
+.msg{text-align:center;font-size:14px;min-height:20px;margin-top:10px;color:var(--err)}
+.msg.ok{color:var(--ok)}
+.hide{display:none}
+dialog{border:1px solid var(--line);border-radius:18px;background:var(--card);color:var(--text);width:min(420px,92vw);padding:18px;font-family:inherit}
+dialog::backdrop{background:rgba(0,0,0,.5)}
+.dlg-btns{display:flex;gap:8px;margin-top:16px}
+.dlg-btns .btn{flex:1}
+.toast{position:fixed;inset-inline:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));max-width:420px;margin:0 auto;background:var(--text);color:var(--bg);padding:11px 16px;border-radius:12px;text-align:center;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.on{opacity:1}
+@media (max-width:520px){.row{flex-wrap:wrap}.acts{width:100%;justify-content:flex-start}}
+.hint{color:var(--muted);font-size:13px;margin:0 0 4px}
+.drop{display:block;text-align:center;border:2px dashed var(--primary);border-radius:14px;padding:20px 10px;margin-top:14px;cursor:pointer;color:var(--primary);font-weight:700;background:var(--soft)}
+.sum{margin-top:14px;font-weight:700}
+.sample{margin:8px 0 0;padding:0;list-style:none;font-size:13px;color:var(--muted)}
+.sample li{padding:5px 0;border-bottom:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- تسجيل الدخول -->
+<section id="login" style="max-width:380px;margin:12vh auto 0">
+  <div class="card">
+    <h1 style="text-align:center">🔐 لوحة التحكم</h1>
+    <p style="text-align:center;color:var(--muted);font-size:14px;margin:6px 0 0">أدخل مفتاح المسؤول للمتابعة</p>
+    <label for="key">مفتاح المسؤول (ADMIN_KEY)</label>
+    <input id="key" type="password" dir="ltr" autocomplete="current-password" style="text-align:right">
+    <button class="btn block" id="enter">دخول</button>
+    <div class="msg" id="lmsg"></div>
+  </div>
+</section>
+
+<!-- اللوحة -->
+<section id="panel" class="hide">
+  <div class="top">
+    <h1>⚙️ لوحة التحكم</h1>
+    <div style="display:flex;gap:8px">
+      <a class="btn ghost sm" href="/" style="text-decoration:none">الصفحة العامة</a>
+      <button class="btn danger sm" id="logout">خروج</button>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><b id="s-total">0</b><span>جهة اتصال</span></div>
+    <div class="stat"><b id="s-roles">0</b><span>منصب مختلف</span></div>
+    <div class="stat"><b id="s-top">0</b><span>مخفية عن الزوار</span></div>
+  </div>
+
+  <div class="tools">
+    <input id="q" type="search" placeholder="بحث بالاسم أو المنصب أو الرقم…" autocomplete="off">
+    <button class="btn" id="add">➕ إضافة</button>
+    <button class="btn ghost" id="imp">📥 استيراد</button>
+    <button class="btn" id="xl" style="background:var(--ok);color:#fff">📊 تصدير Excel</button>
+  </div>
+  <div class="selbar"><label><input type="checkbox" class="chk" id="selall"> تحديد الكل</label><span id="count" style="margin-inline-start:auto"></span><button class="btn ghost sm hide" id="bulkhide">🙈 إخفاء المحدد</button><button class="btn ghost sm hide" id="bulkshow">👁 إظهار المحدد</button><button class="btn danger sm hide" id="bulk">🗑 حذف المحدد</button></div>
+  <div id="list"></div>
+</section>
+</div>
+
+<dialog id="dlg">
+  <h2 id="dtitle" style="margin:0 0 4px;font-size:18px"></h2>
+  <label for="fn">الاسم</label><input id="fn" maxlength="80">
+  <label for="fr">المنصب</label><input id="fr" maxlength="80">
+  <label for="fp">رقم الهاتف</label><input id="fp" type="tel" maxlength="30" dir="ltr" style="text-align:right" placeholder="+9647501234567 أو 07501234567">
+  <div class="msg" id="dmsg"></div>
+  <div class="dlg-btns">
+    <button class="btn" id="dsave">حفظ</button>
+    <button class="btn ghost" id="dcancel">إلغاء</button>
+  </div>
+</dialog>
+
+<dialog id="idlg">
+  <h2 style="margin:0 0 4px;font-size:18px">📥 استيراد جهات اتصال</h2>
+  <p class="hint">Excel ‏(xlsx / xls) أو CSV أو VCF — يتم التعرف على الاسم والرقم والمنصب تلقائيًا، وتظهر الأسماء للجميع فورًا.</p>
+  <label for="icc">رمز البلد للأرقام التي بلا رمز دولي</label>
+  <select id="icc" dir="ltr"></select>
+  <label class="drop" for="ifile">📂 اضغط لاختيار ملف</label>
+  <input id="ifile" type="file" accept=".vcf,.vcs,.xlsx,.xls,.xlsm,.ods,.csv" hidden>
+  <div id="ipreview"></div>
+  <div class="msg" id="imsg"></div>
+  <div class="dlg-btns">
+    <button class="btn hide" id="iok">إضافة</button>
+    <button class="btn ghost" id="iclose">إغلاق</button>
+  </div>
+</dialog>
+
+<dialog id="del">
+  <h2 style="margin:0 0 6px;font-size:18px">تأكيد الحذف</h2>
+  <p id="delt" style="margin:0;color:var(--muted)"></p>
+  <div class="dlg-btns">
+    <button class="btn danger" id="dyes">حذف نهائيًا</button>
+    <button class="btn ghost" id="dno">تراجع</button>
+  </div>
+</dialog>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  var $ = function(id){return document.getElementById(id)};
+  var KEY = '', data = [], editId = null, delId = null, sel = {}, shown = [];
+
+  function norm(s){
+    return String(s||'').toLowerCase()
+      .replace(/[\u064B-\u065F\u0670\u0640]/g,'')
+      .replace(/[أإآ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه')
+      .replace(/[٠-٩]/g,function(d){return d.charCodeAt(0)-1632});
+  }
+  function toast(t){ var e=$('toast'); e.textContent=t; e.classList.add('on'); clearTimeout(toast.t); toast.t=setTimeout(function(){e.classList.remove('on')},2200); }
+
+  function api(method, url, body){
+    var opt = {method:method, headers:{'x-admin-key':KEY}};
+    if(body){ opt.headers['Content-Type']='application/json'; opt.body=JSON.stringify(body); }
+    return fetch(url,opt).then(function(r){
+      return r.json().catch(function(){return {}}).then(function(j){
+        if(!r.ok){ var e=new Error(j.error||'خطأ'); e.status=r.status; throw e; }
+        return j;
+      });
+    });
+  }
+
+  function loadAll(){
+    return api('GET','/api/admin/contacts').then(function(d){ data=d; render(); });
+  }
+
+  function stats(){
+    $('s-total').textContent = data.length;
+    $('s-roles').textContent = Object.keys(data.reduce(function(m,c){ if(c.role) m[c.role.trim()]=1; return m; },{})).length;
+    $('s-top').textContent = data.filter(function(c){return c.hidden}).length;
+  }
+
+  function render(){
+    stats();
+    var q = norm($('q').value.trim()), list = $('list');
+    var res = data.filter(function(c){ return !q || norm(c.name).indexOf(q)>-1 || norm(c.role).indexOf(q)>-1 || norm(c.phone).indexOf(q)>-1; });
+    shown = res;
+    $('count').textContent = (q?'نتائج البحث: ':'الكل: ') + res.length;
+    list.textContent = '';
+    syncSel();
+    if(!res.length){ var e=document.createElement('div'); e.className='empty'; e.textContent='لا توجد جهات اتصال'; list.appendChild(e); return; }
+    res.forEach(function(c){
+      var row=document.createElement('div'); row.className='row';
+      var cb=document.createElement('input'); cb.type='checkbox'; cb.className='chk'; cb.checked=!!sel[c.id];
+      cb.onchange=function(){ if(cb.checked) sel[c.id]=1; else delete sel[c.id]; syncSel(); };
+      var av=document.createElement('div'); av.className='av'; av.textContent=(c.name||'?').trim().charAt(0);
+      var info=document.createElement('div'); info.className='info';
+      var nm=document.createElement('div'); nm.className='nm'; nm.textContent=c.name;
+      var rl=document.createElement('div'); rl.className='rl'; rl.textContent=c.role||'';
+      var ph=document.createElement('div'); ph.className='ph'; ph.textContent=c.phone;
+      if(c.hidden){ row.classList.add('off'); var bg=document.createElement('span'); bg.className='badge'; bg.textContent='🙈 مخفي'; nm.appendChild(bg); }
+      info.appendChild(nm); info.appendChild(rl); info.appendChild(ph);
+      var acts=document.createElement('div'); acts.className='acts';
+      var be=document.createElement('button'); be.className='btn ghost sm'; be.textContent='✏️ تعديل';
+      be.onclick=function(){ openEdit(c); };
+      var bd=document.createElement('button'); bd.className='btn danger sm'; bd.textContent='🗑 حذف';
+      bd.onclick=function(){ delId=c.id; $('delt').textContent='سيتم حذف «'+c.name+'» نهائيًا.'; $('del').showModal(); };
+      var bh=document.createElement('button'); bh.className='btn ghost sm'; bh.textContent=c.hidden?'👁 إظهار':'🙈 إخفاء';
+      bh.onclick=function(){ bh.disabled=true; api('PATCH','/api/admin/contacts/'+c.id+'/hidden',{hidden:!c.hidden}).then(function(){ toast(c.hidden?'أصبحت ظاهرة للجميع':'تم الإخفاء عن الزوار'); return loadAll(); }).catch(function(e){ toast(e.message); bh.disabled=false; }); };
+      acts.appendChild(be); acts.appendChild(bh); acts.appendChild(bd);
+      row.appendChild(cb); row.appendChild(av); row.appendChild(info); row.appendChild(acts);
+      list.appendChild(row);
+    });
+  }
+
+  function openEdit(c){
+    editId = c ? c.id : null;
+    $('dtitle').textContent = c ? 'تعديل جهة الاتصال' : 'إضافة جهة اتصال';
+    $('fn').value = c ? c.name : ''; $('fr').value = c ? c.role : ''; $('fp').value = c ? c.phone : '';
+    $('dmsg').textContent=''; $('dlg').showModal();
+  }
+  $('add').onclick = function(){ openEdit(null); };
+  $('dcancel').onclick = function(){ $('dlg').close(); };
+  $('dsave').onclick = function(){
+    var body={name:$('fn').value.trim(), role:$('fr').value.trim(), phone:$('fp').value.trim()};
+    if(!body.name||!body.phone){ $('dmsg').textContent='الاسم والرقم مطلوبان'; return; }
+    var b=$('dsave'); b.disabled=true;
+    var p = editId===null ? api('POST','/api/admin/contacts',body) : api('PUT','/api/admin/contacts/'+editId,body);
+    p.then(function(){ $('dlg').close(); toast('تم الحفظ ✓'); return loadAll(); })
+     .catch(function(e){ $('dmsg').textContent=e.message; })
+     .then(function(){ b.disabled=false; });
+  };
+
+  $('dno').onclick = function(){ $('del').close(); };
+  $('dyes').onclick = function(){
+    var ids = delId==='bulk' ? Object.keys(sel) : [delId];
+    var b=$('dyes'); b.disabled=true;
+    ids.reduce(function(p,id){ return p.then(function(){ return api('DELETE','/api/admin/contacts/'+id); }); }, Promise.resolve())
+      .then(function(){ sel={}; $('del').close(); toast('تم الحذف ✓'); return loadAll(); })
+      .catch(function(e){ $('del').close(); toast(e.message); return loadAll(); })
+      .then(function(){ b.disabled=false; });
+  };
+
+  $('q').addEventListener('input', render);
+
+  function syncSel(){
+    var n = Object.keys(sel).length;
+    ['bulk','bulkhide','bulkshow'].forEach(function(k){ $(k).classList.toggle('hide', n===0); });
+    $('bulk').textContent = '🗑 حذف المحدد (' + n + ')';
+    $('selall').checked = shown.length>0 && shown.every(function(c){return sel[c.id]});
+  }
+  $('selall').onchange = function(){
+    var on=this.checked; shown.forEach(function(c){ if(on) sel[c.id]=1; else delete sel[c.id]; }); render();
+  };
+  function bulkHidden(h){
+    var ids=Object.keys(sel); if(!ids.length) return;
+    ids.reduce(function(p,id){ return p.then(function(){ return api('PATCH','/api/admin/contacts/'+id+'/hidden',{hidden:h}); }); }, Promise.resolve())
+      .then(function(){ sel={}; toast(h?'تم إخفاء المحدد':'تم إظهار المحدد'); return loadAll(); })
+      .catch(function(e){ toast(e.message); return loadAll(); });
+  }
+  $('bulkhide').onclick = function(){ bulkHidden(true); };
+  $('bulkshow').onclick = function(){ bulkHidden(false); };
+  $('bulk').onclick = function(){
+    var n=Object.keys(sel).length; if(!n) return;
+    delId = 'bulk'; $('delt').textContent='سيتم حذف '+n+' جهة اتصال محددة نهائيًا.'; $('del').showModal();
+  };
+
+  function stamp(){ var d=new Date(); return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2); }
+  function saveBlob(blob, name){
+    var a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name;
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(function(){URL.revokeObjectURL(a.href)},1000);
+  }
+  function exportCsv(){
+    var esc=function(v){ v=String(v); if(/^[=+\-@]/.test(v)) v="'"+v; return '"'+v.replace(/"/g,'""')+'"'; };
+    var lines=['#,الاسم,المنصب,الرقم,الحالة'].concat(data.map(function(c,i){ return [i+1,esc(c.name),esc(c.role),esc(c.phone),c.hidden?'مخفي':'ظاهر'].join(','); }));
+    saveBlob(new Blob(['\ufeff'+lines.join('\r\n')],{type:'text/csv;charset=utf-8'}),'contacts-'+stamp()+'.csv');
+  }
+  $('xl').onclick = function(){
+    if(!data.length){ toast('لا توجد بيانات للتصدير'); return; }
+    if(typeof XLSX==='undefined'){ exportCsv(); toast('تعذّر تحميل مكتبة Excel، تم التصدير بصيغة CSV'); return; }
+    var safe=function(v){ v=String(v); return /^[=+\-@]/.test(v) ? "'"+v : v; };
+    var rows=[['#','الاسم','المنصب','الرقم','الحالة']].concat(data.map(function(c,i){ return [i+1,safe(c.name),safe(c.role),String(c.phone),c.hidden?'مخفي':'ظاهر']; }));
+    var ws=XLSX.utils.aoa_to_sheet(rows);
+    ws['!cols']=[{wch:6},{wch:28},{wch:28},{wch:18},{wch:10}];
+    var wb=XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb,ws,'جهات الاتصال');
+    wb.Workbook={Views:[{RTL:true}]};
+    XLSX.writeFile(wb,'contacts-'+stamp()+'.xlsx');
+    toast('تم تصدير '+data.length+' جهة اتصال ✓');
+  };
+
+  /* ---------- الاستيراد ---------- */
+  var impRows=null, impList=null;
+  ContactImport.fillCountries($('icc'));
+  function imsg(t, cls){ var m=$('imsg'); m.textContent=t||''; m.className='msg'+(cls?' '+cls:''); }
+  function resetImp(){ impRows=null; impList=null; $('ipreview').textContent=''; $('iok').classList.add('hide'); }
+  function previewImp(){
+    var box=$('ipreview'); box.textContent=''; $('iok').classList.add('hide'); impList=null;
+    if(!impRows) return;
+    var f=ContactImport.finalize(impRows.rows, $('icc').value);
+    if(!f.list.length){ imsg('لم أجد أرقامًا صالحة في الملف','err'); return; }
+    imsg(''); impList=f.list;
+    var sum=document.createElement('div'); sum.className='sum';
+    sum.textContent='تم التعرف على '+f.list.length+' جهة اتصال'+(f.invalid||f.dup||impRows.skipped?' (تم تجاهل '+(f.invalid+f.dup+impRows.skipped)+' غير صالح أو مكرر)':'');
+    box.appendChild(sum);
+    var ul=document.createElement('ul'); ul.className='sample';
+    f.list.slice(0,5).forEach(function(c){ var li=document.createElement('li'); li.textContent=c.name+(c.role?' — '+c.role:'')+' — '+c.phone; ul.appendChild(li); });
+    box.appendChild(ul);
+    $('iok').textContent='إضافة '+f.list.length+' جهة'; $('iok').classList.remove('hide');
+  }
+  $('imp').onclick=function(){ resetImp(); imsg(''); $('idlg').showModal(); };
+  $('iclose').onclick=function(){ $('idlg').close(); };
+  $('icc').onchange=previewImp;
+  $('ifile').onchange=function(){
+    var f=this.files[0]; this.value=''; if(!f) return;
+    resetImp(); imsg('جارٍ قراءة الملف…');
+    ContactImport.parseFile(f).then(function(r){ impRows=r; previewImp(); })
+      .catch(function(e){ resetImp(); imsg(e.message||'تعذّرت قراءة الملف','err'); });
+  };
+  $('iok').onclick=function(){
+    if(!impList) return;
+    var b=$('iok'); b.disabled=true; imsg('جارٍ الإضافة…');
+    ContactImport.upload('/api/admin/contacts/import', impList, {'x-admin-key':KEY}).then(function(r){
+      resetImp(); b.disabled=false; loadAll();
+      imsg('تمت إضافة '+r.added+' جهة'+(r.duplicates?' • '+r.duplicates+' موجودة مسبقًا':'')+(r.invalid?' • '+r.invalid+' غير صالحة':'')+' ✓','ok');
+    }).catch(function(e){ b.disabled=false; imsg(e.message,'err'); });
+  };
+
+  /* ---------- التزامن الفوري ---------- */
+  var es=null, tmr=null;
+  function live(){
+    if(es||!window.EventSource) return;
+    es=new EventSource('/api/events');
+    es.addEventListener('change', function(){ clearTimeout(tmr); tmr=setTimeout(function(){ if(KEY) loadAll(); },250); });
+  }
+
+  function enter(key, silent){
+    KEY = key;
+    return api('GET','/api/admin/check').then(function(){
+      try{ sessionStorage.setItem('ak', key); }catch(e){}
+      $('login').classList.add('hide'); $('panel').classList.remove('hide');
+      live();
+      return loadAll();
+    }).catch(function(e){
+      KEY=''; try{ sessionStorage.removeItem('ak'); }catch(x){}
+      if(!silent) $('lmsg').textContent = e.message || 'تعذّر الاتصال';
+    });
+  }
+  $('enter').onclick = function(){ var k=$('key').value.trim(); if(k) enter(k,false); };
+  $('key').addEventListener('keydown', function(e){ if(e.key==='Enter') $('enter').click(); });
+  $('logout').onclick = function(){ KEY=''; try{ sessionStorage.removeItem('ak'); }catch(e){} location.reload(); };
+
+  try{ var saved=sessionStorage.getItem('ak'); if(saved) enter(saved,true); }catch(e){}
+})();
+</script>
+</body>
+</html>
