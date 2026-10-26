@@ -85,16 +85,7 @@ select{width:100%;font:inherit;color:var(--text);background:var(--bg);border:1px
     <input id="r" maxlength="80" placeholder="مثال: مدير مكتب الوزير" autocomplete="off">
     <label for="p">رقم الهاتف</label>
     <div class="prow">
-      <select id="cc" aria-label="رمز البلد" dir="ltr">
-        <option value="964" selected>🇮🇶 +964</option>
-        <option value="966">🇸🇦 +966</option><option value="971">🇦🇪 +971</option><option value="965">🇰🇼 +965</option>
-        <option value="974">🇶🇦 +974</option><option value="973">🇧🇭 +973</option><option value="968">🇴🇲 +968</option>
-        <option value="962">🇯🇴 +962</option><option value="963">🇸🇾 +963</option><option value="961">🇱🇧 +961</option>
-        <option value="970">🇵🇸 +970</option><option value="20">🇪🇬 +20</option><option value="967">🇾🇪 +967</option>
-        <option value="218">🇱🇾 +218</option><option value="249">🇸🇩 +249</option><option value="216">🇹🇳 +216</option>
-        <option value="213">🇩🇿 +213</option><option value="212">🇲🇦 +212</option><option value="90">🇹🇷 +90</option>
-        <option value="98">🇮🇷 +98</option><option value="44">🇬🇧 +44</option><option value="1">🇺🇸 +1</option>
-      </select>
+      <select id="cc" aria-label="رمز البلد" dir="ltr" disabled style="opacity:1;appearance:none;-webkit-appearance:none;text-align:center"><option value="964" selected>🇮🇶 +964</option></select>
       <input id="p" type="tel" inputmode="tel" maxlength="20" placeholder="7501234567" dir="ltr" style="text-align:right" autocomplete="off">
     </div>
     <button class="btn" id="save">حفظ جهة الاتصال</button>
@@ -107,7 +98,7 @@ select{width:100%;font:inherit;color:var(--text);background:var(--bg);border:1px
     <h2 style="margin:0 0 6px;font-size:17px">📥 استيراد جهات اتصال من ملف</h2>
     <p class="hint">الملفات المدعومة: Excel ‏(xlsx / xls) و CSV وبطاقات الاتصال VCF. يتعرف الموقع تلقائيًا على أعمدة الاسم والرقم والمنصب (إن وُجد)، وتُضاف الأسماء للجميع فورًا.</p>
     <label for="icc">رمز البلد للأرقام التي بلا رمز دولي</label>
-    <select id="icc" dir="ltr"></select>
+    <select id="icc" dir="ltr" disabled style="opacity:1;appearance:none;-webkit-appearance:none"><option value="964" selected>🇮🇶 العراق (+964)</option></select>
     <label class="drop" for="file">📂 اضغط لاختيار ملف</label>
     <input id="file" type="file" accept=".vcf,.vcs,.xlsx,.xls,.xlsm,.ods,.csv" hidden>
     <div id="ipreview"></div>
@@ -219,7 +210,6 @@ select{width:100%;font:inherit;color:var(--text);background:var(--bg);border:1px
 
   /* ---------- الاستيراد ---------- */
   var impRows = null;
-  ContactImport.fillCountries($('icc'));
   function imsg(t, cls){ var m=$('imsg'); m.textContent=t||''; m.className='msg'+(cls?' '+cls:''); }
   function resetImport(){ impRows=null; $('ipreview').textContent=''; }
 
