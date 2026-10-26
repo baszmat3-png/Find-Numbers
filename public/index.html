@@ -152,7 +152,10 @@ select{width:100%;font:inherit;color:var(--text);background:var(--bg);border:1px
       return !q || norm(c.name).indexOf(q)>-1 || norm(c.role).indexOf(q)>-1 || norm(c.phone).indexOf(q)>-1 || (qd.length>=3 && intl(c.phone).indexOf(qd)>-1);
     });
     $('total').textContent = ready && !failed ? contacts.length.toLocaleString('en-US') : '…';
-    $('count').textContent = ready && q ? 'نتائج البحث: ' + res.length : '';
+    var MAX = 100, total = res.length, more = total > MAX;
+    if(more) res = res.slice(0, MAX);
+    $('count').textContent = !ready ? '' : q ? 'نتائج البحث: ' + total + (more ? ' (يظهر أول ' + MAX + ' — دقّق البحث لتضييق النتائج)' : '')
+      : (more ? 'يظهر أول ' + MAX + ' فقط — ابحث بالاسم أو الرقم لإظهار البقية' : '');
     list.textContent = '';
     if(!res.length){
       var e = document.createElement('div'); e.className='empty';
